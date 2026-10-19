@@ -1,2 +1,6 @@
-node_modules/
+# Secrets and runtime data - never commit these
 .env
+private/.env
+private/storage/
+
+node_modules/
