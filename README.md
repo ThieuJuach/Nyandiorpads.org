@@ -1,0 +1,1 @@
+This is a website I built for Nyandior Pads Initiative, a non-profit that provides reusable sanitary pads and menstrual health education to girls in Kakuma refugee camp and underserved communities across South Sudan.
