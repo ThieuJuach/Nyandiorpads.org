@@ -7,9 +7,14 @@
  *
  *   1. Real environment variables (set in your hosting control panel,
  *      an Apache "SetEnv" directive, or the server's environment).
- *   2. A ".env" file. By default this is private/.env, which the web server
- *      is configured never to serve (see private/.htaccess and dev-router.php).
- *      Set NYANDIOR_ENV_FILE to keep it outside the web root instead.
+ *   2. A settings file, the first one found of:
+ *      a. the path in the NYANDIOR_ENV_FILE environment variable
+ *      b. "nyandior.env" in the folder ABOVE the website's root folder
+ *         (on Hostinger: domains/nyandiorpads.org/nyandior.env, next to
+ *         public_html). Recommended for production: files outside the web
+ *         root can never be downloaded, even if .htaccess stops working.
+ *      c. private/.env (convenient for local development; the web server is
+ *         configured never to serve it, see private/.htaccess and dev-router.php)
  *
  * See private/.env.example for every supported setting.
  */
@@ -56,8 +61,18 @@ function env(string $key, ?string $default = null): ?string
     static $file_values = null;
 
     if ($file_values === null) {
-        $env_file = getenv('NYANDIOR_ENV_FILE') ?: __DIR__ . '/.env';
-        $file_values = nyandior_parse_env_file($env_file);
+        $file_values = [];
+        $candidates = [
+            getenv('NYANDIOR_ENV_FILE') ?: null,
+            dirname(__DIR__, 2) . '/nyandior.env',   // outside the web root
+            __DIR__ . '/.env',                         // private/.env
+        ];
+        foreach (array_filter($candidates) as $env_file) {
+            if (is_file($env_file)) {
+                $file_values = nyandior_parse_env_file($env_file);
+                break;
+            }
+        }
     }
 
     foreach ([getenv($key), $_SERVER[$key] ?? false, $_ENV[$key] ?? false] as $value) {
