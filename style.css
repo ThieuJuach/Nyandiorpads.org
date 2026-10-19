@@ -387,15 +387,6 @@ h3{
     background: #f44336;
     color: #fff;
 }
-.hero-btn.red-btn::after{
-    background: #f44336;
-}
-.hero-btn.red-btn::before{
-    background: #f44336;
-}
-.content-image{
-    flex-basis: 50%;
-}
 .about-col img{
     width: 100%;
 }
@@ -540,29 +531,8 @@ h3{
     background: #e8f5e9;
     color: #2e7d32;
 }
-.form-status.error{
-    background: #fff3f3;
-    color: #c62828;
-}
-.hp-field{
-    position: absolute;
-    left: -9999px;
-}
 
 .footer-link{
     text-decoration: none;
     color: #777;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

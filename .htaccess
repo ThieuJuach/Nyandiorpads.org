@@ -1,31 +1,27 @@
-# Nyandior Pads Initiative - Apache security settings
-# Applies on Apache hosting (cPanel, XAMPP, etc.). For local development with
-# PHP's built-in server, dev-router.php applies the same rules.
+# Nyandior Pads Initiative - web server security settings
+# Read by Apache and LiteSpeed (Hostinger). The site is static: forms open
+# WhatsApp, so nothing is ever sent to this server.
 
 # Don't list folder contents when there's no index file
 Options -Indexes
 
-# Reject oversized request bodies before PHP even starts (100 KB is plenty
-# for the contact form; there are no file uploads anywhere on the site)
-LimitRequestBody 102400
+# No page accepts uploads or form posts, so reject any large request body
+LimitRequestBody 10240
 
-# Block hidden files (.env, .htaccess, .git, ...) and files that are only
-# for development or documentation
+# Block hidden files and folders (.htaccess, .git, ...)
 <IfModule mod_authz_core.c>
     <FilesMatch "^\.">
         Require all denied
     </FilesMatch>
-    <FilesMatch "^(dev-router\.php|.*\.(md|example|log|json|ini|sh|bak))$">
-        Require all denied
-    </FilesMatch>
 </IfModule>
 <IfModule mod_alias.c>
-    RedirectMatch 404 /(\.git|private)(/|$)
+    RedirectMatch 404 /\.git(/|$)
 </IfModule>
 
 # Security headers (OWASP HTTP Headers Cheat Sheet)
-# KEEP IN SYNC with private/security.php
 <IfModule mod_headers.c>
+    # Only our own files plus Google Fonts, Font Awesome (cdnjs) and the
+    # Google Maps embed may load; inline scripts are blocked
     Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data:; frame-src https://www.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'"
     Header always set X-Content-Type-Options "nosniff"
     Header always set X-Frame-Options "SAMEORIGIN"
@@ -34,8 +30,7 @@ LimitRequestBody 102400
     Header always set Cross-Origin-Opener-Policy "same-origin"
     # Only over HTTPS: tell browsers to always use HTTPS for this site
     Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" "expr=%{HTTPS} == 'on'"
-    Header always unset X-Powered-By
 </IfModule>
 
-# Hide the Apache version in error pages
+# Hide the server version in error pages
 ServerSignature Off

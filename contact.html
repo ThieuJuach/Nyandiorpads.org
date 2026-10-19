@@ -44,7 +44,7 @@
 
     
     <section class="location">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.9132900137533!2d36.881521700000015!3d-1.220396199999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f1b0354ceed0b%3A0xb705c299ea5c7360!2sQwetu%20%7C%20Student%20Residences%20%7C%20Aberdare%20Heights%201!5e0!3m2!1sen!2ske!4v1752064235065!5m2!1sen!2ske" width="720" height="445" frameborder="0" allowfullscreen loading="lazy" title="Map showing our location in Roysambu, Nairobi"></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.9132900137533!2d36.881521700000015!3d-1.220396199999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f1b0354ceed0b%3A0xb705c299ea5c7360!2sQwetu%20%7C%20Student%20Residences%20%7C%20Aberdare%20Heights%201!5e0!3m2!1sen!2ske!4v1752064235065!5m2!1sen!2ske" width="720" height="445" allowfullscreen loading="lazy" title="Map showing our location in Roysambu, Nairobi"></iframe>
     </section>
     
     <section class="contact-us">
@@ -74,12 +74,12 @@
                 </div>
                 <div class="contact-col">
                     <p id="formStatus" class="form-status" role="status" hidden></p>
-                    <form method="post" action="contact-form-handler.php">
-                    <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
+                    <!-- Messages are sent to our WhatsApp (see js/main.js); nothing is stored on the server -->
+                    <form id="contactForm">
                     <input type="text" name="name" maxlength="100" placeholder="Enter your name" required>
-                    <input type="email" name="email" maxlength="254" placeholder="Enter email address" required>
+                    <input type="email" name="email" maxlength="254" placeholder="Enter email address">
                     <input type="text" name="subject" maxlength="150" placeholder="Enter your subject" required>
-                    <textarea rows="8" name="message" maxlength="5000" placeholder="Message" required></textarea>
+                    <textarea rows="8" name="message" maxlength="1000" placeholder="Message" required></textarea>
                     <button type="submit" class="hero-btn red-btn">Send Message</button>
                     </form> 
                 </div>
